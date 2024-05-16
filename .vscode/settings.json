@@ -1,0 +1,11 @@
+{
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": "${workspaceFolder:full-stack-development}/nextjs/dashboard-nextjs/prisma/dev.db",
+      "name": "dashboard"
+    }
+  ]
+}
