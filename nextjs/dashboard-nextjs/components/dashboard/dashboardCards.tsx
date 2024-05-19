@@ -5,6 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/card';
+import SkeletonCard from './SkeletonCard';
 
 type CardsListProps = {
   cards: DashBoardCard[];

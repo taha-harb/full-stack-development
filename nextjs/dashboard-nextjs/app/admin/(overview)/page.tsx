@@ -1,12 +1,15 @@
 import DashboardCards from '@/components/dashboard/dashboardCards';
-import db from '../db/db';
+import db from '../../db/db';
 import { formatCurrency, formatNumber } from '@/lib/formmatters';
+import { Suspense } from 'react';
+import SkeletonCard from '@/components/dashboard/SkeletonCard';
 
 async function getSalesData() {
   const data = await db.order.aggregate({
     _sum: { pricePaidInCent: true },
     _count: true,
   });
+  await wait(3000);
   return {
     amount: (data._sum.pricePaidInCent || 0) / 100,
     numberOfSales: data._count,
@@ -32,10 +35,14 @@ async function getProductsData() {
     db.product.count({ where: { isAvailableForPurchase: true } }),
     db.product.count({ where: { isAvailableForPurchase: false } }),
   ]);
+  await wait(5000);
   return {
     activeCount,
     inActiveCount,
   };
+}
+async function wait(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export default async function AdminDashboard() {
@@ -63,7 +70,9 @@ export default async function AdminDashboard() {
   ];
   return (
     <main className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      <DashboardCards cards={cards} />
+      <Suspense fallback={<SkeletonCard />}>
+        <DashboardCards cards={cards} />
+      </Suspense>
     </main>
   );
 }
