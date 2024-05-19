@@ -16,23 +16,26 @@ const addSchema = z.object({
     .number()
     .int()
     .gt(0, { message: 'The Price should greater than 0' }),
+  description: z.string().min(1),
+  file: fileSchema.refine(
+    (file) => file.size > 0,
+    'The file should not be Empty',
+  ),
+  image: imageSchema.refine(
+    (file) => file.type.startsWith('image/'),
+    'The file should be image',
+  ),
 });
 
 export async function addProduct(prevState: unknown, formData: FormData) {
-  const result = addSchema.safeParse({
-    name: formData.get('name'),
-    priceInCents: formData.get('priceInCents'),
-  });
+  const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
   console.log(result.error);
   if (!result.success) {
-    return {
-      errors: result.error.formErrors.fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
-    };
+    return result.error.formErrors.fieldErrors;
   }
-  //const data = result.data;
+  const data = result.data;
 
-  /* await fs.mkdir('products', { recursive: true });
+  await fs.mkdir('products', { recursive: true });
   const filePath = `products/${crypto.randomUUID()}-${data.file.name}`;
   await fs.writeFile(filePath, Buffer.from(await data.file.arrayBuffer()));
 
@@ -53,5 +56,5 @@ export async function addProduct(prevState: unknown, formData: FormData) {
       imagePath,
     },
   });
-  redirect('/admin/products'); */
+  redirect('/admin/products');
 }
