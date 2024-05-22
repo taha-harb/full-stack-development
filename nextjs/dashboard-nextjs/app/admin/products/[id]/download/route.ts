@@ -1,0 +1,34 @@
+import db from '@/app/db/db';
+import { notFound } from 'next/navigation';
+import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs/promises';
+
+export async function GET(
+  req: NextRequest,
+  { params: { id } }: { params: { id: string } },
+) {
+  const product = await db.product.findUnique({
+    where: { id },
+    select: {
+      name: true,
+      filePath: true,
+    },
+  });
+  console.log(product?.filePath);
+  if (product == null) return notFound();
+  try {
+    const { size } = await fs.stat(product.filePath);
+    const file = await fs.readFile(product.filePath);
+    const extension = product.filePath.split('.').pop();
+
+    return new NextResponse(file, {
+      headers: {
+        'content-Disposition': `attachment; filename="${product.name}.${extension}"`,
+        'content-length': size.toString(),
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return notFound();
+  }
+}
