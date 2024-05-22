@@ -7,7 +7,7 @@ export default function AdminLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <main className=" grid max-h-svh grid-cols-[10rem_1fr] gap-4">
+      <main className=" grid min-h-svh grid-cols-[10rem_1fr] gap-4">
         <Nav>
           <NavLink href="/admin">Dashboard</NavLink>
           <NavLink href="/admin/products">Products</NavLink>

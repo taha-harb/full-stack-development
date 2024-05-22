@@ -15,8 +15,16 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
+import {
+  ActiveToggleDropDownItem,
+  DeleteToggleAction,
+  DeleteToggleDropDownItem,
+} from './_components/ProductActions';
+import { AlertDialog, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import Alert_Dialog from '@/components/AlertDialog';
 
 export default function AdminProductsPage() {
   return (
@@ -69,7 +77,7 @@ async function ProductsTable() {
               ) : (
                 <>
                   <span className=" sr-only">Unavailable</span>
-                  <XCircle className="text-red-500" />{' '}
+                  <XCircle className=" stroke-destructive" />
                 </>
               )}
             </TableCell>
@@ -79,22 +87,44 @@ async function ProductsTable() {
             </TableCell>
             <TableCell>{formatNumber(product._count.Order)}</TableCell>
             <TableCell>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <MoreVertical />
-                  <span className=" sr-only">Actions</span>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
-                    <a download href={`admin/products/${product.id}/download`}>
-                      Download
-                    </a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href={`admin/products/${product.id}/edit`}>Edit</Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <AlertDialog>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreVertical />
+                    <span className=" sr-only">Actions</span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem asChild>
+                      <a
+                        download
+                        href={`admin/products/${product.id}/download`}
+                      >
+                        Download
+                      </a>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href={`./products/${product.id}/edit`}>Edit</Link>
+                    </DropdownMenuItem>
+                    <ActiveToggleDropDownItem
+                      id={product.id}
+                      isAvailableForPurchase={product.isAvailableForPurchase}
+                    />
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem variant="destructive">
+                      <AlertDialogTrigger>Delete </AlertDialogTrigger>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <Alert_Dialog
+                  title="Are you sure ?"
+                  message={`This action cannot be undone.\nThis will permanently delete this Product ${product.name}.`}
+                >
+                  <DeleteToggleAction
+                    id={product.id}
+                    disabled={product._count.Order > 0}
+                  />
+                </Alert_Dialog>
+              </AlertDialog>
             </TableCell>
           </TableRow>
         ))}

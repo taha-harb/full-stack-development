@@ -34,3 +34,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# public Folder
+/public
+#products folder
+/products
+# SQLITE Database
+/prisma/migrations
+/prisma/dev.db
