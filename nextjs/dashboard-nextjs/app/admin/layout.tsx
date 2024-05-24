@@ -8,13 +8,21 @@ export default function AdminLayout({
   return (
     <>
       <main className=" grid min-h-svh grid-cols-[10rem_1fr] gap-4">
-        <Nav>
-          <NavLink href="/admin">Dashboard</NavLink>
-          <NavLink href="/admin/products">Products</NavLink>
-          <NavLink href="/admin/users">Customers</NavLink>
-          <NavLink href="/admin/orders">Sales</NavLink>
+        <Nav isCol>
+          <NavLink href="/admin" isCol>
+            Dashboard
+          </NavLink>
+          <NavLink href="/admin/products" isCol>
+            Products
+          </NavLink>
+          <NavLink href="/admin/users" isCol>
+            Customers
+          </NavLink>
+          <NavLink href="/admin/orders" isCol>
+            Sales
+          </NavLink>
         </Nav>
-        <div className="my-6"> {children}</div>
+        <div className=" my-6"> {children}</div>
       </main>
     </>
   );

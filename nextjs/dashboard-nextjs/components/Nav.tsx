@@ -4,26 +4,39 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { Component, ComponentProps, ReactNode } from 'react';
 
-export function Nav({ children }: { children: ReactNode }) {
+export function Nav({
+  children,
+  isCol,
+}: {
+  children: ReactNode;
+  isCol?: boolean;
+}) {
   return (
-    <nav className="flex  w-40 flex-col bg-primary pl-2 pt-10 text-primary-foreground">
+    <nav
+      className={cn(
+        'flex justify-center bg-primary text-primary-foreground',
+        isCol && 'w-40  flex-col justify-start pl-2 pt-10',
+      )}
+    >
       {children}
     </nav>
   );
 }
 
-export function NavLink(props: Omit<ComponentProps<typeof Link>, 'className'>) {
+export function NavLink(
+  props: Omit<ComponentProps<typeof Link>, 'className'> & { isCol?: boolean },
+) {
   const pathname = usePathname();
-
   return (
     <Link
-      {...props}
       className={cn(
-        'p-4 hover:rounded-s-sm hover:bg-secondary hover:text-secondary-foreground',
-        'focus-visible:rounded-s-sm focus-visible:bg-secondary focus-visible:text-secondary-foreground',
-        pathname === props.href &&
-          ' rounded-s-sm bg-background text-foreground',
+        'p-4  hover:bg-secondary hover:text-secondary-foreground',
+        ' focus-visible:bg-secondary focus-visible:text-secondary-foreground',
+        pathname === props.href && '  bg-background text-foreground',
+        props.isCol &&
+          'rounded-s-sm hover:rounded-s-sm focus-visible:rounded-s-sm',
       )}
+      {...props}
     />
   );
 }
