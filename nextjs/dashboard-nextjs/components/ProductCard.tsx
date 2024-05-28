@@ -35,7 +35,7 @@ export default function ProductCard({
       </div>
       <CardHeader>
         <CardTitle>{name}</CardTitle>
-        <CardDescription>{formatCurrency(priceInCents)}</CardDescription>
+        <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
       </CardHeader>
       <CardContent>
         <p className="line-clamp-4">{description}</p>
