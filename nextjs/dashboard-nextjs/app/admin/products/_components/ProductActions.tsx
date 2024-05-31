@@ -46,8 +46,10 @@ export function DeleteToggleDropDownItem({
       variant="destructive"
       disabled={disabled || isPending}
       onClick={() => {
-        startTransition(() => deleteProduct(id));
-        router.refresh();
+        startTransition(async () => {
+          await deleteProduct(id);
+          router.refresh();
+        });
       }}
     >
       Delete
@@ -67,8 +69,10 @@ export function DeleteToggleAction({
     <AlertDialogAction
       className=" bg-destructive hover:bg-destructive"
       onClick={() => {
-        startTransition(() => deleteProduct(id));
-        router.refresh();
+        startTransition(async () => {
+          await deleteProduct(id);
+          router.refresh();
+        });
       }}
     >
       Delete

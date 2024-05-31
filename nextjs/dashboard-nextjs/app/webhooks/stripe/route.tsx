@@ -44,9 +44,9 @@ export async function POST(req: NextRequest) {
     });
     await resend.emails.send({
       from: `Support <${process.env.SENDER_EMAIL}>`,
-      to: email,
+      to: [`t.h.harb@gmail.com`],
       subject: 'Order Confirmation',
-      react: <h1>Hi</h1>,
+      react: <h1>xxx test test</h1>,
     });
   }
   return new NextResponse();

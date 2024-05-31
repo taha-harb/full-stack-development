@@ -9,7 +9,6 @@ async function getSalesData() {
     _sum: { pricePaidInCent: true },
     _count: true,
   });
-  await wait(3000);
   return {
     amount: (data._sum.pricePaidInCent || 0) / 100,
     numberOfSales: data._count,
@@ -35,7 +34,7 @@ async function getProductsData() {
     db.product.count({ where: { isAvailableForPurchase: true } }),
     db.product.count({ where: { isAvailableForPurchase: false } }),
   ]);
-  await wait(5000);
+
   return {
     activeCount,
     inActiveCount,

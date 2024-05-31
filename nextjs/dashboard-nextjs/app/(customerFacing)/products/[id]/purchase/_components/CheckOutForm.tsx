@@ -74,12 +74,14 @@ function Form({
   const [email, setEmail] = useState<string>();
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
     if (elements == null || stripe == null || email == null) {
+      console.log('all null');
       return;
     }
+
     setLoading(true);
     const orderEixsts = await userOrderExists(email, productId);
+    console.log(orderEixsts);
     if (orderEixsts) {
       setErrorMessage(
         'You have already purchased this product try downloading it from the Orders Page ',
@@ -107,7 +109,7 @@ function Form({
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>Checkout</CardTitle>
+          <CardTitle>Checkout xxx</CardTitle>
           {erroMessage && (
             <CardDescription className=" text-destructive">
               {erroMessage}

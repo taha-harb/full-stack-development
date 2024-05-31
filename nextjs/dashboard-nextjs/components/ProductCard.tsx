@@ -11,7 +11,6 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { formatCurrency } from '@/lib/formmatters';
-import { Car } from 'lucide-react';
 
 type ProductCardProps = {
   id: string;

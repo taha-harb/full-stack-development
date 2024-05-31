@@ -6,16 +6,16 @@ import React, { Component, ComponentProps, ReactNode } from 'react';
 
 export function Nav({
   children,
-  isCol,
+  iscol,
 }: {
   children: ReactNode;
-  isCol?: boolean;
+  iscol?: boolean;
 }) {
   return (
     <nav
       className={cn(
         'flex justify-center bg-primary text-primary-foreground',
-        isCol && 'w-40  flex-col justify-start pl-2 pt-10',
+        iscol && 'w-40  flex-col justify-start pl-2 pt-10',
       )}
     >
       {children}
@@ -24,7 +24,7 @@ export function Nav({
 }
 
 export function NavLink(
-  props: Omit<ComponentProps<typeof Link>, 'className'> & { isCol?: boolean },
+  props: Omit<ComponentProps<typeof Link>, 'className'> & { iscol?: boolean },
 ) {
   const pathname = usePathname();
   return (
@@ -33,7 +33,7 @@ export function NavLink(
         'p-4  hover:bg-secondary hover:text-secondary-foreground',
         ' focus-visible:bg-secondary focus-visible:text-secondary-foreground',
         pathname === props.href && '  bg-background text-foreground',
-        props.isCol &&
+        props.iscol &&
           'rounded-s-sm hover:rounded-s-sm focus-visible:rounded-s-sm',
       )}
       {...props}
